@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Suyerin Sigils</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Suyerin Sigils</h1>
+        <p>The following is a list of all possible <output id="count"></output> glyphs, or sigils, which constitute the written form of the Suyerin language, a constructed language from my D&D campaign setting, <a href="https://auriin.fergcb.uk/">Auriin</a>.</p>
+        <p>Each glyph consists of one or more connected brush-strokes, navigating a 7-point grid.</p>
+        
+        <div>
+          <input type="checkbox" id="chkShowGuides" />
+          <label for="chkShowGuides">Show Guides</label>
+        </div>
+      </div>
+      <div>
+        <canvas id="grid"></canvas>
+      </div>
+    </header>
+    <div id="glyphs"></div>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

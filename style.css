@@ -1,0 +1,88 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 20px;
+  background: #212529;
+  color: #ced4da;
+  line-height: 1.5;
+}
+
+header {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 8rem;
+}
+
+@media only screen and (max-width: 800px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+}
+
+p {
+  max-width: 60ch;
+}
+
+a {
+  color: #f06595;
+  transition: color 200ms ease-in-out;
+}
+
+a:hover {
+  color: #f783ac;
+}
+
+output {
+  font-weight: 700;
+}
+
+#grid {
+  padding: 1rem;
+  background: #2B3035;
+  border-radius: 1rem;
+}
+
+#glyphs {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100vw;
+  max-width: 100%;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+#glyphs>.glyph {
+  position: relative;
+  background: #262A2F;
+  transition: background-color 200ms ease-in-out;
+  border-radius: 0.365rem;
+}
+
+#glyphs>.glyph:hover {
+  background: #2B3035;
+}
+
+#glyphs>.glyph>.id {
+  position: absolute;
+  background: #f8f9fa20;
+  top: 0;
+  left: 0;
+  padding: 0.25rem 1ch;
+  dislay: grid;  
+  justify-content: center;
+  align-content: center;
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+  border-radius: 0.125rem;
+  border-radius-top-left: 0.365rem;
+}
+
+#glyphs>.glyph:hover>.id {
+  opacity: 1;
+}
