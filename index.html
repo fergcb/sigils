@@ -10,7 +10,7 @@
     <header>
       <div>
         <h1>Suyerin Sigils</h1>
-        <p>The following is a list of all possible <output id="count"></output> glyphs, or sigils, which constitute the written form of the Suyerin language, a constructed language from my D&D campaign setting, <a href="https://auriin.fergcb.uk/">Auriin</a>.</p>
+        <p>This page describes the glyphs, or sigils, which constitute the written form of the Suyerin language, a constructed language from my D&D campaign setting, <a href="https://auriin.fergcb.uk/">Auriin</a></p>
         <p>Each glyph consists of one or more connected brush-strokes, navigating a 7-point grid.</p>
         
         <div>
@@ -22,7 +22,18 @@
         <canvas id="grid"></canvas>
       </div>
     </header>
-    <div id="glyphs"></div>
+    <main>
+      <section>
+        <h2>Suyerin Abjad</h2>
+        <p>The Suyerin Abjad was a collection of sigils, used to represent the consonant sounds of the Old Taspian language. These sigils 13 were derived from simplified Pre-Suyerin pictograms, which represented words starting with the consonant that the resulting sigil corresponded to.</p>
+        <div id="abjad"></div>
+      </section>
+      <section>
+        <h2>All Glyphs</h2>
+        <p>The following is a list of all <output id="count"></output> possible sigils that can be constructed using valid brush-strokes.</p>
+        <div id="glyphs"></div>
+      </section>
+    </main>
     <script type="module" src="./main.js"></script>
   </body>
 </html>

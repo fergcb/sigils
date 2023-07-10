@@ -25,6 +25,10 @@ header {
   }
 }
 
+h1, h2 {
+  margin-top: 0;
+}
+
 p {
   max-width: 60ch;
 }
@@ -42,23 +46,53 @@ output {
   font-weight: 700;
 }
 
+section {
+  padding: 2rem;
+}
+
 #grid {
   padding: 1rem;
   background: #2B3035;
   border-radius: 1rem;
 }
 
+#abjad {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 2rem;
+  text-align: center;
+  font-weight: semibold;
+  color: #adb5bd;
+  font-size: 24px;
+}
+
+#abjad .glyph {
+  padding-bottom: 1rem;
+}
+
+#abjad .glyph .ipa {
+  color: #ced4da;
+  font-family: 'Fira Mono', monospace;
+  font-weight: bold;
+}
+
+#abjad .glyph .meaning {
+  color: #868e96;
+  font-style: italic;
+}
+
 #glyphs {
-  box-sizing: border-box;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
   width: 100vw;
   max-width: 100%;
-  padding: 1rem;
   gap: 1rem;
 }
 
+
+#abjad>.glyph,
 #glyphs>.glyph {
   position: relative;
   background: #262A2F;
