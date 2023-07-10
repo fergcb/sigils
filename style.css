@@ -110,13 +110,13 @@ section {
   top: 0;
   left: 0;
   padding: 0.25rem 1ch;
-  dislay: grid;  
+  display: grid;  
   justify-content: center;
   align-content: center;
   opacity: 0;
   transition: opacity 200ms ease-in-out;
   border-radius: 0.125rem;
-  border-radius-top-left: 0.365rem;
+  border-top-left-radius: 0.365rem;
 }
 
 #glyphs>.glyph:hover>.id {
