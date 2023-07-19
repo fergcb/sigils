@@ -10,9 +10,9 @@ self.addEventListener('message', e => {
 })
 
 function generateGlyphs(constants) {
-  const { EDGES, VERTICES, VPRIME } = constants;
+  const { EDGES, VERTICES, VPRIME, VALID_STARTING_STROKES } = constants;
   const glyphs = [];
-  const queue = EDGES.flatMap((_, i) => [[[i], false], [[i], true]]);
+  const queue = VALID_STARTING_STROKES;
   let lastSent = -1;
   while (queue.length > 0) {
     const [path, reversed] = queue.shift();

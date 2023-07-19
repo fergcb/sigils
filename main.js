@@ -1,14 +1,60 @@
-import { EDGES, POINTS, VERTICES, VPRIME } from "./points.js";
+import { EDGES, POINTS, VERTICES, VPRIME, VALID_STARTING_STROKES } from "./points.js";
 import { lerp, midpoint, TAU } from "./math.js";
 
-const SCALE = 200;
+const SCALE = 150;
 const SHOW_GUIDES = false;
+
+const abjad = {
+  "p": [19327377442n, "lava flow"],
+  "b": [1285n, "snake"],
+  "t": [68157473n, "scorpion"],
+  "d": [5163n, "human"],
+  "k": [262176n, "mountain"],
+  "g": [33570825n, "animal fat"],
+  "s": [1048577n, "dragon"],
+  "z": [32870n, "seven"],
+  "t͡ʃ": [16431n, "sun"],
+  "h": [4296016897n, "city"],
+  "m": [4196496n, "fairy"],
+  "n": [83902496n, "quiver"],
+  "r": [1048630n, "fishing net"],
+}
 
 const $glyphs = document.querySelector('#glyphs');
 const $count = document.querySelector('#count');
 const $grid = document.querySelector('#grid');
 const $chkShowGuides = document.querySelector('#chkShowGuides');
 const $abjad = document.querySelector("#abjad");
+const $source = document.querySelector("#source");
+const $translation = document.querySelector("#translation");
+
+function onSourceChange() {
+  const chars = $source.value
+    .replaceAll(/[aeiou]/g, '')
+    .split('')
+    .map(c => abjad[c.replace('c', 't͡ʃ')]?.[0] ?? 0n);
+  
+  if (chars.some(c => c > 0)) {
+    const $c = document.createElement('canvas');
+    $c.width = chars.length * 300;
+    $c.height = 300;
+    const ctx = $c.getContext('2d');
+    chars.forEach((char, i) => {
+      const glyph = glyphFromID(char);
+      drawGlyph(ctx, glyph, { size: 300, offsetX: 300 * i, padding: 0 })
+    });
+    const dataURL = $c.toDataURL();
+    const $img = document.createElement('img');
+    $img.src = dataURL;
+    $translation.replaceChildren($img);
+  } else {
+    $translation.replaceChildren();
+  }
+}
+
+$source.addEventListener('change', onSourceChange);
+$source.addEventListener('keyup', onSourceChange);
+$source.addEventListener('paste', onSourceChange);
 
 $grid.width = 300;
 $grid.height = 300;
@@ -21,22 +67,6 @@ $chkShowGuides.addEventListener('change', () => {
   showGuides = $chkShowGuides.checked;
   redrawAll();
 })
-
-const abjad = {
-  "p": [19327377442n, "lava flow"],
-  "b": [131217n, "snake"],
-  "t": [68157473n, "scorpion"],
-  "d": [5163n, "human"],
-  "k": [262176n, "mountain"],
-  "g": [33570825n, "animal fat"],
-  "s": [1073746050n, "dragon"],
-  "z": [32870n, "seven"],
-  "t͡ʃ": [16431n, "sun"],
-  "h": [4296016897n, "city"],
-  "m": [4196496n, "fairy"],
-  "n": [83902496n, "quiver"],
-  "r": [1048630n, "fishing net"],
-}
 
 Object.entries(abjad).forEach(([phoneme, [glyphID, meaning]]) => {
   const $glyph = document.createElement('div');
@@ -62,14 +92,14 @@ Object.entries(abjad).forEach(([phoneme, [glyphID, meaning]]) => {
 function drawGlyph(
   ctx,
   path,
-  { drawGuide = false, drawIds = false, size = SCALE } = {}
+  { drawGuide = false, drawIds = false, size = SCALE, padding = 0.1, offsetX = 0, offsetY = 0 } = {}
 ) {
   ctx.font = "bold 16px 'Fira Sans', sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
 
-  const scaleX = (x) => x * size * 0.8 + size * 0.1;
-  const scaleY = (y) => y * size * 0.8 + size * 0.1;
+  const scaleX = (x) => offsetX + x * size * (1 - padding * 2) + size * padding;
+  const scaleY = (y) => offsetY + y * size * (1 - padding * 2) + size * padding;
   const scale = ([x, y]) => [scaleX(x), scaleY(y)];
 
   POINTS.forEach(([px, py], i) => {
@@ -114,7 +144,7 @@ function drawGlyph(
           const [tx, ty] = scale([
             lerp(m, c, 0.05),
             lerp(m, c, 0.2),
-            lerp(m, c, 0.25),
+            lerp(m, c, 0.35),
             lerp(m, c, 0.2),
           ][group]);
           ctx.fillStyle = [
@@ -129,8 +159,12 @@ function drawGlyph(
     );
   }
 
+  const untouchedPoints = new Set(POINTS);
+
   path.forEach(
     ({ from: a, to: b, via: c, curviness, thickness }, i) => {
+      untouchedPoints.delete(a);
+      untouchedPoints.delete(b);
       const [ax, ay] = scale(a);
       const [bx, by] = scale(b);
       const m = midpoint(a, b);
@@ -152,6 +186,16 @@ function drawGlyph(
       }
     }
   );
+
+  // untouchedPoints.forEach(point => {
+  //   const [ax, ay] = scale(point);
+  //   const r = size * 0.0365;
+  //   ctx.strokeStyle = "#c2255c";
+  //   ctx.lineWidth = r / 2;
+  //   ctx.beginPath();
+  //   ctx.ellipse(ax, ay, r, r, 0, 0, TAU);
+  //   ctx.stroke();
+  // })
 }
 
 function drawGlyphs(glyphs, first, last) {
@@ -225,6 +269,9 @@ const worker = new Worker('/worker.js');
 window.glyphs = glyphs;
 window.glyphFromID = glyphFromID;
 window.pathFromID = pathFromID;
+window.pathID = function (path) {
+  return path.reduce((id, edge) => id | 2n ** BigInt(edge), 0n)
+}
  
 worker.addEventListener('message', e => {
   const newGlyphs = e.data
@@ -239,7 +286,7 @@ worker.addEventListener('message', e => {
 
 worker.postMessage({
   cmd: 'generate-glyphs',
-  constants: { EDGES, VERTICES, VPRIME },
+  constants: { EDGES, VERTICES, VPRIME, VALID_STARTING_STROKES },
 });
 
 

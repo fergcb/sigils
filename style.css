@@ -10,23 +10,23 @@ body {
   overflow-x: hidden;
 }
 
-header {
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8rem;
-}
-
-@media only screen and (max-width: 800px) {
-  header {
-    flex-direction: column;
-    gap: 2rem;
-  }
-}
-
 h1, h2 {
   margin-top: 0;
+}
+
+h1:has(+ .subtitle) {
+  margin-bottom: 0;
+}
+
+.subtitle {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: -0.365rem;
+  color: #868e96;
+}
+
+.subtitle a {
+  color: #adb5bd;
 }
 
 p {
@@ -42,6 +42,18 @@ a:hover {
   color: #f783ac;
 }
 
+input[type="text"] {
+  appearance: none;
+  border: 2px solid #868e96;
+  background-color: #212529;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 24px;
+  font-family: 'Fira Sans', sans-serif;
+  color: #ced4da;
+  margin-bottom: 1rem;
+}
+
 output {
   font-weight: 700;
 }
@@ -50,10 +62,41 @@ section {
   padding: 2rem;
 }
 
+@media only screen and (max-width: 800px) {
+  section {
+    padding: 1rem;
+  }
+}
+
+#intro {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8rem;
+}
+
+@media only screen and (max-width: 800px) {
+  #intro {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
 #grid {
   padding: 1rem;
   background: #2B3035;
   border-radius: 1rem;
+}
+
+#translation {
+  display: block;
+  height: 6rem;
+}
+
+#translation img {
+  height: 100%;
+  display: block;
 }
 
 #abjad {
@@ -65,6 +108,13 @@ section {
   font-weight: semibold;
   color: #adb5bd;
   font-size: 24px;
+}
+
+@media only screen and (max-width: 800px) {
+  #abjad {
+    gap: 1rem;
+    justify-content: center;
+  }
 }
 
 #abjad .glyph {
@@ -89,6 +139,13 @@ section {
   width: 100vw;
   max-width: 100%;
   gap: 1rem;
+}
+
+@media only screen and (max-width: 800px) {
+  #glyphs {
+    gap: 1rem;
+    justify-content: center;
+  }
 }
 
 

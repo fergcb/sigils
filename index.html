@@ -7,26 +7,34 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <header>
-      <div>
-        <h1>Suyerin Sigils</h1>
-        <p>This page describes the glyphs, or sigils, which constitute the written form of the Suyerin language, a constructed language from my D&D campaign setting, <a href="https://auriin.fergcb.uk/">Auriin</a></p>
-        <p>Each glyph consists of one or more connected brush-strokes, navigating a 7-point grid.</p>
-        
-        <div>
-          <input type="checkbox" id="chkShowGuides" />
-          <label for="chkShowGuides">Show Guides</label>
-        </div>
-      </div>
-      <div>
-        <canvas id="grid"></canvas>
-      </div>
-    </header>
     <main>
+      <section id="intro">
+        <div>
+          <h1>Suyerin Sigils</h1>
+          <p class="subtitle">by <a href="https://fergusbentley.com">Fergus Bentley</a></p>
+          <p>This page describes the glyphs, or sigils, which constitute the written form of the Suyerin language, a constructed language from my D&D campaign setting, <a href="https://auriin.fergcb.uk/">Auriin</a></p>
+          <p>Each glyph consists of one or more connected brush-strokes, navigating a 7-point grid.</p>
+          
+          <div>
+            <input type="checkbox" id="chkShowGuides" />
+            <label for="chkShowGuides">Show Guides</label>
+          </div>
+        </div>
+        <div>
+          <canvas id="grid"></canvas>
+        </div>
+      </section>
       <section>
         <h2>Suyerin Abjad</h2>
         <p>The Suyerin Abjad was a collection of sigils, used to represent the consonant sounds of the Old Taspian language. These sigils 13 were derived from simplified Pre-Suyerin pictograms, which represented words starting with the consonant that the resulting sigil corresponded to.</p>
         <div id="abjad"></div>
+      </section>
+      <section id="translator">
+        <h2>Translator</h2>
+        <p>Enter some text into the textbox to generate the corresponding Suyerin glyphs.</p>
+        <p>Vowels will be removed, and other characters that don't correspond to sounds in the Suyerin abjad will be rendered as blank spaces. Use <code>c</code> to encode <code>/t͡ʃ/</code>.</p>
+        <input type="text" id="source" />
+        <output id="translation"></output>
       </section>
       <section>
         <h2>All Glyphs</h2>
